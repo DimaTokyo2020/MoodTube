@@ -28,12 +28,18 @@ namespace MoodTube.Controllers
         {
             ViewData["SongNameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "SongName_desc" : "";
             ViewData["SingerNameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "SingerName_desc" : "";
+            ViewData["GenreSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Genre_desc" : "";
+            ViewData["MoodSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Mood_desc" : "";
             ViewData["SongNameFilter"] = searchSongString;
             ViewData["SingerNameFilter"] = searchSingerString;
             ViewData["GenreFilter"] = searchGenreString;
             ViewData["MoodFilter"] = searchMoodString;
 
+            //Shows Songs with Singers name and Moods (All the virtual objects)
             var songs = _context.Songs.Include(s => s.Mood).Include(s => s.Singer);
+
+
+            //Filters:
 
             //Song+Singer+Genre
             if (!String.IsNullOrEmpty(searchSongString) & !String.IsNullOrEmpty(searchSingerString) & !String.IsNullOrEmpty(searchGenreString) & !String.IsNullOrEmpty(searchMoodString))
@@ -41,70 +47,60 @@ namespace MoodTube.Controllers
                 var song = songs.Where(s => s.SongName.Contains(searchSongString)).Where(s => s.Singer.SingerName.Contains(searchSingerString)).Where(s => s.Genre.Contains(searchGenreString)).Where(s => s.MoodID.Contains(searchMoodString));
                 return View(await song.AsNoTracking().ToListAsync());
             }
-
             //Singer+Genre+Mood
             if (!String.IsNullOrEmpty(searchSingerString) & !String.IsNullOrEmpty(searchGenreString) & !String.IsNullOrEmpty(searchMoodString))
             {
                 var song = songs.Where(s => s.Singer.SingerName.Contains(searchSingerString)).Where(s => s.Genre.Contains(searchGenreString)).Where(s => s.MoodID.Contains(searchMoodString));
                 return View(await song.AsNoTracking().ToListAsync());
             }
-
             //Song+Genre+Mood
             if (!String.IsNullOrEmpty(searchSongString) & !String.IsNullOrEmpty(searchGenreString) & !String.IsNullOrEmpty(searchMoodString))
             {
                 var song = songs.Where(s => s.SongName.Contains(searchSongString)).Where(s => s.Genre.Contains(searchGenreString)).Where(s => s.MoodID.Contains(searchMoodString));
                 return View(await song.AsNoTracking().ToListAsync());
             }
-
             //Song+Singer+Mood
             if (!String.IsNullOrEmpty(searchSongString) & !String.IsNullOrEmpty(searchSingerString) & !String.IsNullOrEmpty(searchMoodString))
             {
                 var song = songs.Where(s => s.SongName.Contains(searchSongString)).Where(s => s.Singer.SingerName.Contains(searchSingerString)).Where(s => s.MoodID.Contains(searchMoodString));
                 return View(await song.AsNoTracking().ToListAsync());
             }
-
             //Song+Singer+Genre
             if (!String.IsNullOrEmpty(searchSongString) & !String.IsNullOrEmpty(searchSingerString) & !String.IsNullOrEmpty(searchGenreString))
             {
                 var song = songs.Where(s => s.SongName.Contains(searchSongString)).Where(s => s.Singer.SingerName.Contains(searchSingerString)).Where(s => s.Genre.Contains(searchGenreString));
                 return View(await song.AsNoTracking().ToListAsync());
             }
-
             //Genre+Mood
             if (!String.IsNullOrEmpty(searchGenreString) & !String.IsNullOrEmpty(searchMoodString))
             {
                 var song = songs.Where(s => s.Genre.Contains(searchGenreString)).Where(s => s.MoodID.Contains(searchMoodString));
                 return View(await song.AsNoTracking().ToListAsync());
             }
-
             //Singer+Mood
             if (!String.IsNullOrEmpty(searchSingerString) & !String.IsNullOrEmpty(searchMoodString))
             {
                 var song = songs.Where(s => s.Singer.SingerName.Contains(searchSingerString)).Where(s => s.MoodID.Contains(searchMoodString));
                 return View(await song.AsNoTracking().ToListAsync());
             }
-
             //Singer+Gener
             if (!String.IsNullOrEmpty(searchSingerString) & !String.IsNullOrEmpty(searchGenreString))
             {
                 var song = songs.Where(s => s.Singer.SingerName.Contains(searchSingerString)).Where(s => s.Genre.Contains(searchGenreString));
                 return View(await song.AsNoTracking().ToListAsync());
             }
-
             //Song+Mood
             if (!String.IsNullOrEmpty(searchSongString) & !String.IsNullOrEmpty(searchMoodString))
             {
                 var song = songs.Where(s => s.SongName.Contains(searchSongString)).Where(s => s.MoodID.Contains(searchMoodString));
                 return View(await song.AsNoTracking().ToListAsync());
             }
-
             //Song+Genre
             if (!String.IsNullOrEmpty(searchSongString) & !String.IsNullOrEmpty(searchGenreString))
             {
                 var song = songs.Where(s => s.SongName.Contains(searchSongString)).Where(s => s.Genre.Contains(searchGenreString));
                 return View(await song.AsNoTracking().ToListAsync());
             }
-
             //Song+Singer
             if (!String.IsNullOrEmpty(searchSongString)& !String.IsNullOrEmpty(searchSingerString))
             {
@@ -149,9 +145,15 @@ namespace MoodTube.Controllers
                 case "SingerName_desc":
                     var song2 = songs.OrderBy(s => s.Singer.SingerName);
                     return View(await song2.AsNoTracking().ToListAsync());
-                default:
-                    var song3 = songs.OrderBy(s => s.SongName);
+                case "Genre_desc":
+                    var song3 = songs.OrderBy(s => s.Genre);
                     return View(await song3.AsNoTracking().ToListAsync());
+                case "Mood_desc":
+                    var song4 = songs.OrderBy(s => s.MoodID);
+                    return View(await song4.AsNoTracking().ToListAsync());
+                default:
+                    var song5 = songs.OrderBy(s => s.SongName);
+                    return View(await song5.AsNoTracking().ToListAsync());
             }
             //return View(await songs.AsNoTracking().ToListAsync());
 

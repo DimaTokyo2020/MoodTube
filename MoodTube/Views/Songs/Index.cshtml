@@ -20,7 +20,7 @@
     </select>
         -->
             Find by:
-            </p>
+       </p>
         <p>
             Song Name:
             <input type="text" name="SearchSongString" value="@ViewData["SongNameFilter"]" />
@@ -57,10 +57,12 @@
                 <!--@Html.DisplayNameFor(model => model.Singer)-->
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Genre)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["GenreSortParm"]">@Html.DisplayNameFor(model => model.Genre)</a>
+                <!--@Html.DisplayNameFor(model => model.Genre)-->
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Mood)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["MoodSortParm"]">@Html.DisplayNameFor(model => model.Mood)</a>
+                <!--@Html.DisplayNameFor(model => model.Mood)-->
             </th>
             <th></th>
         </tr>
