@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+    
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+</head>
+<body>
+    <div id="scroll">
+        <nav>
+            <div class="dropdown">
+                <button class="dropbtn">Menu</button>
+                <div class="dropdown-content">
+                    <a id="moodTubeNav" onclick="document.getElementById('one').scrollIntoView({behavior: 'smooth'})">MoodTube</a>
+                    <a onclick="document.getElementById('two').scrollIntoView({behavior: 'smooth'})">Party</a>
+                    <a onclick="document.getElementById('three').scrollIntoView({behavior: 'smooth'})">Chill</a>
+                    <div>
+                        <button id="loginbtn" onclick="credsToggle()">Login</button>
+                        <div>
+                            <form id="credentials" action="/" method="post">
+                                User name: <input type="text" name="user"><br>
+                                Password: <input type="password" name="pass"><br>
+                                <input type="submit" value="Submit">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="page" id="one">
+            <div id="moodTubeTitle">
+                <img src='~/images/mood-logo.png' style="display: inline-block; max-width: 10vw; max-height: 5vh;border-radius: 30%;" />
+                <a href="/Home/About">MoodTube</a>
+                <a id="learnAbout" href="/Home/About">Learn about MoodTube&copy</a>
+            </div>
+            <div>
+                <a id="mainToParty" onclick="document.getElementById('two').scrollIntoView({behavior: 'smooth'})">
+                    Party
+                </a>
+            </div>
+            <div>
+                <a id="mainToChill" onclick="document.getElementById('three').scrollIntoView({behavior: 'smooth'})">
+                    Chill
+                </a>
+            </div>
+        </div>
+        <div class="page" id="two">
+            <!--<img src='{{url_for("portal.static", filename="caa.png")}}' style="display: inline-block; max-width: 10vw; max-height: 10vh;border-radius: 100%;">-->
+            <div class="linkTitle">
+                <a href="/party">Party</a>
+            </div>
+        </div>
+        <div class="page" id="three">
+            <!--<img src='{{url_for("portal.static", filename="request-log.png")}}' style="display: inline-block; max-width: 10vw; max-height: 10vh;border-radius: 100%;">-->
+            <div class="linkTitle">
+                <a href="/chill">Chill</a>
+            </div>
+        </div>
+</body>
+<script type=text/javascript src="{{  url_for('portal.static', filename='js/portal.js') }}"></script>
+</html>
