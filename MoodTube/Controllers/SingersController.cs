@@ -27,14 +27,17 @@ namespace MoodTube.Controllers
 
             var singers =_context.Singers;
 
-
+            //Search:
             //Singer
             if (!String.IsNullOrEmpty(searchSingerString))
             {
                 var songV = singers.Where(s => s.SingerName.Contains(searchSingerString));
                 return View(await songV.AsNoTracking().ToListAsync());
             }
-                switch (sortOrder)
+
+
+            //Sort
+            switch (sortOrder)
             {
                 case "SingerName_desc":
                     var song1 = singers.OrderByDescending(s => s.SingerName);
